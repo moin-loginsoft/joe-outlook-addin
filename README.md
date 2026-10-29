@@ -134,7 +134,7 @@ The **Joe Security Report Phishing** add-in enables users to:
 | Azure Client Secret | Client secret value from Phase 1. |
 | Joe Sandbox Api Url | Keep the default `https://jbxcloud.joesecurity.org/api` for Joe Sandbox Cloud. For on-premise Joe Sandbox, use `https://<your-server>/joesandbox/index.php/api`. |
 | Joe Sandbox Api Key | Your Joe Sandbox API key. |
-| Accept Joe Sandbox Terms And Conditions | Set to **true** for Joe Sandbox Cloud. This confirms you accept the [Terms and Conditions](https://jbxcloud.joesecurity.org/resources/termsandconditions.pdf). |
+| Accept Joe Sandbox Terms And Conditions | Set to **true** for Joe Sandbox Cloud. This confirms you accept the [Terms and Conditions](https://www.joesecurity.org/resources/tandc.pdf). |
 | Analyze On Joe Reverser | **true** to also analyze reported emails with Joe Reverser (the account must include Joe Reverser). |
 | Move Reported Email To Folder | **true** to move the email to a folder after it is submitted successfully. |
 | Reported Email Folder Name | Folder for reported emails (default `Phishing Report`). It is created if it does not exist. |
