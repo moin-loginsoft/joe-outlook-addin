@@ -1,6 +1,6 @@
 # Joe Security Report Phishing – Outlook Add-in Deployment Guide
 
-**Latest version:** 1.0.0 · **Release date:** TBD
+**Latest version:** 1.0.0 · **Release date:** 2026-10-30
 
 The Joe Security Report Phishing add-in lets Outlook users report a suspicious email to **Joe Sandbox** with one click. The complete original email (headers, body and all attachments) is submitted to Joe Sandbox as an `.eml` file for analysis.
 
@@ -285,8 +285,6 @@ All settings are stored as **Environment variables** of the Web App. To change o
 | `MAX_EMAIL_SIZE_MB` | Maximum email size for submission |
 | `APP_DOMAIN` | Only for a custom domain: the domain users reach the Web App on |
 
-> **Tip:** for production, consider storing `AZURE_CLIENT_SECRET` and `JOE_API_KEY` in Azure Key Vault and referencing them from these settings ([Key Vault references](https://learn.microsoft.com/azure/app-service/app-service-key-vault-references)).
-
 ---
 
 ## Troubleshooting
@@ -314,4 +312,4 @@ To see what the Web App is doing, open **App Service → your Web App → Monito
 
 | Version | Release Date | Release Notes |
 | :--- | :--- | :--- |
-| 1.0.0 | TBD | <ul><li>Initial release</li><li>Outlook add-in that submits reported emails to Joe Sandbox for analysis</li><li>Azure Web App deployment template with Microsoft 365 SSO</li><li>Optional move of reported emails to a folder, and optional Joe Reverser analysis</li></ul> |
+| 1.0.0 | 2026-10-30 | <ul><li>Initial release</li><li>Outlook add-in that submits reported emails to Joe Sandbox for analysis</li><li>Azure Web App deployment template with Microsoft 365 SSO</li><li>Optional move of reported emails to a folder, and optional Joe Reverser analysis</li></ul> |
