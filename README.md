@@ -1,8 +1,8 @@
-# Joe Security Report Phishing – Outlook Add-in Deployment Guide
+# Joe Sandbox Email Analysis – Outlook Add-in Deployment Guide
 
 **Latest version:** 1.0.0 · **Release date:** 2026-10-30
 
-The Joe Security Report Phishing add-in lets Outlook users report a suspicious email to **Joe Sandbox** with one click. The complete original email (headers, body and all attachments) is submitted to Joe Sandbox as an `.eml` file for analysis.
+The Joe Sandbox Email Analysis add-in lets Outlook users submit a suspicious email to **Joe Sandbox** with one click, to check it for phishing and malware. The complete original email (headers, body and all attachments) is submitted to Joe Sandbox as an `.eml` file for analysis.
 
 ---
 
@@ -34,21 +34,21 @@ Microsoft Outlook add-ins are web-based extensions that integrate directly into 
 
 ### About Joe Security
 
-Joe Security develops **Joe Sandbox**, a platform for deep malware analysis. Joe Sandbox analyzes files, URLs and emails in a controlled environment and reports their behavior and indicators, so security teams can quickly decide whether something is malicious.
+Joe Security develops **Joe Sandbox**, a platform for deep malware analysis. Joe Sandbox analyzes files, URLs and emails in a controlled environment and reports their behavior and indicators, so security teams can quickly decide whether something is malicious. For an email, that covers both phishing (for example, deceptive links and credential-harvesting pages) and malware (for example, malicious attachments or downloads).
 
-The **Joe Security Report Phishing** add-in enables users to:
+The **Joe Sandbox Email Analysis** add-in enables users to:
 
-- Report a suspicious email with a single click.
-- Submit the original email, including all attachments, to Joe Sandbox for analysis.
+- Submit a suspicious email with a single click.
+- Have the original email, including all attachments, analyzed by Joe Sandbox for phishing and malware.
 - Optionally move the reported email to a dedicated Outlook folder.
 - Sign in seamlessly with Microsoft 365 SSO.
 
 ### How it works
 
-1. The user opens a suspicious email, clicks **Report Phishing** and confirms.
+1. The user opens a suspicious email, clicks **Analyze with Joe Sandbox** and confirms.
 2. The add-in signs the user in with Microsoft 365 SSO and sends the message ID to the add-in's Web App, hosted in your Azure subscription.
 3. The Web App downloads the original email from Microsoft Graph and submits it to Joe Sandbox, tagged `Outlook Add-in` and with the reporting user's address.
-4. Optionally, the email is moved to a folder such as **Phishing Report**.
+4. Optionally, the email is moved to a folder such as **Joe Security Report**.
 
 **Data handling:**
 
@@ -135,9 +135,9 @@ The **Joe Security Report Phishing** add-in enables users to:
 | Joe Sandbox Api Url | Keep the default `https://jbxcloud.joesecurity.org/api` for Joe Sandbox Cloud. For on-premise Joe Sandbox, use `https://<your-server>/joesandbox/index.php/api`. |
 | Joe Sandbox Api Key | Your Joe Sandbox API key. |
 | Accept Joe Sandbox Terms And Conditions | Set to **true** for Joe Sandbox Cloud. This confirms you accept the [Terms and Conditions](https://www.joesecurity.org/resources/tandc.pdf). |
-| Analyze On Joe Reverser | **true** to also analyze reported emails with Joe Reverser (the account must include Joe Reverser). |
+| Analyze On Joe Reverser | **true** to also analyze submitted emails with Joe Reverser (the account must include Joe Reverser). |
 | Move Reported Email To Folder | **true** to move the email to a folder after it is submitted successfully. |
-| Reported Email Folder Name | Folder for reported emails (default `Phishing Report`). It is created if it does not exist. |
+| Reported Email Folder Name | Folder for submitted emails (default `Joe Security Report`). It is created if it does not exist. |
 | Max Email Size MB | Largest email that may be submitted (default 25 MB). |
 | Deployment Timestamp | Leave as is. |
 | Package Url | Leave as is. |
@@ -235,12 +235,12 @@ https://YOUR-DOMAIN/manifest.xml
 ### Phase 5 – Verification
 
 1. Open any email in Outlook.
-2. Click **Report Phishing**:
+2. Click **Analyze with Joe Sandbox**:
    - **Classic Outlook (Windows/Mac):** on the ribbon, in the **Joe Security** group.
    - **Outlook on the web / new Outlook:** in the message toolbar, under **Apps**. Users can pin it for one-click access.
-3. The task pane opens and shows the email's subject. Click **Report**.
+3. The task pane opens and shows the email's subject. Click **Analyze**.
 
-![Report Phishing task pane](images/14-report-phishing-taskpane.png)
+![Analyze with Joe Sandbox task pane](images/14-analyze-taskpane.png)
 
 4. The task pane shows **Submitted to Joe Sandbox.**
 
@@ -258,7 +258,7 @@ https://YOUR-DOMAIN/manifest.xml
 - [ ] `https://YOUR-DOMAIN/health` returns `"status":"ok"` and `"configured":true`
 - [ ] The add-in is visible in Outlook on the web and in desktop Outlook
 - [ ] SSO works without a sign-in prompt for an already signed-in user
-- [ ] A reported email (with attachments) appears as a new analysis in Joe Sandbox
+- [ ] A submitted email (with attachments) appears as a new analysis in Joe Sandbox
 - [ ] An email larger than **Max Email Size MB** is rejected with a clear message
 - [ ] Move-to-folder behaves as configured
 
@@ -280,7 +280,7 @@ All settings are stored as **Environment variables** of the Web App. To change o
 | `JOE_API_KEY` | Joe Sandbox API key |
 | `JOE_ACCEPT_TAC` | `true` to accept the Joe Sandbox Cloud Terms and Conditions |
 | `JOE_ANALYZE_ON_REVERSER` | `true` to also analyze with Joe Reverser |
-| `MOVE_REPORTED_EMAIL_TO_FOLDER` | `true` to move reported emails to a folder |
+| `MOVE_REPORTED_EMAIL_TO_FOLDER` | `true` to move submitted emails to a folder |
 | `REPORTED_EMAIL_FOLDER_NAME` | Name of that folder |
 | `MAX_EMAIL_SIZE_MB` | Maximum email size for submission |
 | `APP_DOMAIN` | Only for a custom domain: the domain users reach the Web App on |
@@ -289,7 +289,7 @@ All settings are stored as **Environment variables** of the Web App. To change o
 
 ## Troubleshooting
 
-To see what the Web App is doing, open **App Service → your Web App → Monitoring → Log stream** and report an email again. Email content is never logged.
+To see what the Web App is doing, open **App Service → your Web App → Monitoring → Log stream** and submit an email again. Email content is never logged.
 
 | Symptom | Cause and solution |
 | :--- | :--- |
@@ -312,4 +312,4 @@ To see what the Web App is doing, open **App Service → your Web App → Monito
 
 | Version | Release Date | Release Notes |
 | :--- | :--- | :--- |
-| 1.0.0 | 2026-10-30 | <ul><li>Initial release</li><li>Outlook add-in that submits reported emails to Joe Sandbox for analysis</li><li>Azure Web App deployment template with Microsoft 365 SSO</li><li>Optional move of reported emails to a folder, and optional Joe Reverser analysis</li></ul> |
+| 1.0.0 | 2026-10-30 | <ul><li>Initial release</li><li>Outlook add-in that submits suspicious emails to Joe Sandbox for phishing and malware analysis</li><li>Azure Web App deployment template with Microsoft 365 SSO</li><li>Optional move of submitted emails to a folder, and optional Joe Reverser analysis</li></ul> |
